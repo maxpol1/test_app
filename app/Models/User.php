@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function remove()
     {
-        Storage::delete('uploads/' . $this->image);
+        Storage::delete('uploads/' . $this->avatar);
         $this->delete();
     }
 
@@ -84,20 +84,25 @@ class User extends Authenticatable
     {
         if ($image == null){ return;}
 
-        Storage::delete('uploads/' . $this->image);
+//        dd(get_class_methods($image));
+        if ($this->avatar != null)
+        {
+            Storage::delete('uploads/' . $this->avatar);
+        }
+
         $filename = Str::random(10). '.'. $image->extension(); // генерирует имя
-        $image->saveAs('uploads', $filename); // относительно папки public
-        $this->image = $filename;
+        $image->storeAs('uploads', $filename); // относительно папки public
+        $this->avatar = $filename;
         $this->save();
     }
 
     public function getAvatar()
     {
-        if ($this->image == null)
+        if ($this->avatar == null)
         {
             return '/img/no-user-image.png';
         }
-        return '/uploads/' . $this->image;
+        return './uploads/' . $this->avatar;
 
     }
 
@@ -127,7 +132,7 @@ class User extends Authenticatable
     }
     public function unban()
     {
-        $this->status = User::IS_ACTIV;
+        $this->status = User::IS_ACTIVE;
         $this->save();
     }
 
