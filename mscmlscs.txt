@@ -1,1 +1,5 @@
 docker exec -it  my_php_fpm /bin/bash
+
+sudo chown -R $USER:$USER . //меняет владельца деректории на текущего.
+
+echo ${USER} //показывает текущего пользователя.
