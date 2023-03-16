@@ -6,19 +6,23 @@
     <title>AdminLTE 2 | Blank Page</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="{{asset('/admin/bootstrap/css/bootstrap.min.css')}}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('/admin/font-awesome/4.5.0/css/font-awesome.min.css')}}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{{asset('/admin/ionicons/2.0.1/css/ionicons.min.css')}}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('/admin/dist/css/AdminLTE.min.css')}}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{asset('/admin/dist/css/skins/_all-skins.min.css')}}">
+{{--    <!-- Bootstrap 3.3.6 -->--}}
+{{--    <link rel="stylesheet" href="{{asset('/admin/bootstrap/css/bootstrap.min.css')}}">--}}
+{{--    <!-- Font Awesome -->--}}
+{{--    <link rel="stylesheet" href="{{asset('/admin/font-awesome/4.5.0/css/font-awesome.min.css')}}">--}}
+{{--    <!-- Ionicons -->--}}
+{{--    <link rel="stylesheet" href="{{asset('/admin/ionicons/2.0.1/css/ionicons.min.css')}}">--}}
+{{--    <!-- Theme style -->--}}
+{{--    <link rel="stylesheet" href="{{asset('/admin/dist/css/AdminLTE.min.css')}}">--}}
+{{--    <!-- AdminLTE Skins. Choose a skin from the css/skins--}}
+{{--         folder instead of downloading all of them to reduce the load. -->--}}
+{{--    <link rel="stylesheet" href="{{asset('/admin/dist/css/skins/_all-skins.min.css')}}">--}}
 
-    <link rel="stylesheet" href="/css/admin.css">
+    @vite(['resources/css/admin.css', 'resources/js/admin.js'])
+
+
+
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -203,7 +207,7 @@
             <!-- search form -->
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <input type="text" name="q" class="form-control" placeholder="Search..." >
                     <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
@@ -453,6 +457,15 @@
 <script src="{{asset('/admin/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{asset('/admin/bootstrap/js/bootstrap.min.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('/admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('/admin/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('/admin/plugins/select2/select2.full.min.js')}}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{asset('/admin/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+<!-- iCheck 1.0.1 -->
+<script src="{{asset('/admin/plugins/iCheck/icheck.min.js')}}"></script>
 <!-- SlimScroll -->
 <script src="{{asset('/admin/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
@@ -460,9 +473,10 @@
 <!-- AdminLTE App -->
 <script src="{{asset('/admin/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('/admin/dist/js/demo.js')}}'"></script>
+<script src="{{asset('/admin/dist/js/demo.js')}}"></script>
+{{--Scripts--}}
+<script src="{{ asset('/admin/dist/js/scripts.js') }}"></script>
 
-<script src="/js/admin.js"></script>
 </body>
 
 <!-- Mirrored from almsaeedstudio.com/themes/AdminLTE/pages/examples/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 18 Dec 2016 15:13:35 GMT -->
