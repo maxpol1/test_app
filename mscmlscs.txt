@@ -15,3 +15,22 @@ which node // просмотр куда установлен нод.
 sudo ln -s "$(which node)" /usr/bin/node // ярлык в нужную папку.
 
 sudo ln -s "$(which npm)" /usr/bin/npm  // ярлык.
+
+rm имя файла ---- удаляет файл.
+rm -R имя каталого ---удаляет католог с содержимым.
+
+По какой-то причине, хотя я запускал эту команду ранее (и она не работала в то время),
+по какой-то причине что-то еще , что я сделал, просматривая ответы в этом списке,
+привело к тому, что эта команда внезапно заработала для меня.
+Вот подмножество команд, которые я запускал между неудачными
+ и рабочими вызовами
+ service docker restart
+  service docker stop,
+   service docker start,
+  docker context use default,
+   systemctl stop docker,
+    systemctl stop docker.socket.
+  Один или несколько из них могли заставить последующую последовательность
+  service docker restart
+  работать и
+   docker run hello-world

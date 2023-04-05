@@ -25,7 +25,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
     ];
 
     /**
@@ -61,7 +60,6 @@ class User extends Authenticatable
     {
         $user = new static();
         $user->fill($fields);
-        $user->password = bcrypt($fields['password']);
         $user->save();
 
         return $user;
@@ -69,36 +67,56 @@ class User extends Authenticatable
 
     public function edit($fields)
     {
-        $this->fill($fields);
-        $this->password = bcrypt($fields['password']);
+        $this->fill($fields); // все поля закидываются
+//        $this->password = bcrypt($fields['password']);
         $this->save();
+    }
+
+    public function generatePassword($password)
+    {
+        if ($password != null)
+        {
+            $this->password = bcrypt($password);
+            $this->save();
+        }
     }
 
     public function remove()
     {
-        Storage::delete('uploads/' . $this->image);
+//        Storage::delete('uploads/' . $this->avatar);
+        $this->removeAvatar();
         $this->delete();
     }
 
     public function   uploadAvatar($image)
     {
         if ($image == null){ return;}
-
-        Storage::delete('uploads/' . $this->image);
-        $filename = Str::random(10). '.'. $image->extension(); // генерирует имя
-        $image->saveAs('uploads', $filename); // относительно папки public
-        $this->image = $filename;
+//        dd(get_class_methods($image));
+        $this->removeAvatar();
+        $extension = 'jpg';
+        $filename = uniqid() . '.' . $extension;
+    //        $filename = Str::random(10). '.'. $image->extension(); // генерирует имя
+        $image->storeAs('uploads', $filename); // относительно папки public
+        $this->avatar = $filename;
         $this->save();
     }
 
-    public function getAvatar()
+    public function removeAvatar()
     {
-        if ($this->image == null)
+        if($this->avatar != null)
         {
-            return '/img/no-user-image.png';
+            Storage::delete('uploads/' . $this->avatar);
         }
-        return '/uploads/' . $this->image;
+    }
 
+    public function getImage()
+    {
+        if ($this->avatar == null)
+        {
+            return '/img/no-image.png';
+        }
+
+        return '/uploads/' . $this->avatar;
     }
 
     public function makeAdmin(){
@@ -127,7 +145,7 @@ class User extends Authenticatable
     }
     public function unban()
     {
-        $this->status = User::IS_ACTIV;
+        $this->status = User::IS_ACTIVE;
         $this->save();
     }
 

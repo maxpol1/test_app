@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -19,24 +21,31 @@ class Post extends Model
     const IS_DRAFT = 0;
     const IS_PUBLIC = 1;
 
-    protected $fillable = ['title', 'content', 'user_id'];
+    protected $fillable =
+        [
+            'title', 'content', 'date',
+//            'category_id', 'status', 'is_featured'
+        ];
 
     public function category()
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function author()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class,
+        return $this->belongsToMany
+        (
+            Tag::class,
             'post_tags',
             'post_id',
-            'tag_id');
+            'tag_id'
+        );
     }
 
     public function sluggable(): array
@@ -46,7 +55,7 @@ class Post extends Model
                 'source' => 'title'
             ]
         ]; //привет - privet
-            // привет - privet-1
+        // привет - privet-1
     }
 
     public static function add($fields)
@@ -54,7 +63,9 @@ class Post extends Model
         $post = new static();
         $post->fill($fields);
         $post->user_id = 1;
+//        dd($post);
         $post->save();
+
         return $post;
     }
 
@@ -66,42 +77,53 @@ class Post extends Model
 
     public function remove()
     {
-        Storage::delete('uploads/' . $this->image);
+        $this->removeImage();
         $this->delete();
     }
 
-    public function   uploadImage($image)
+    public function removeImage()
     {
-        if ($image == null){ return;}
-        Storage::delete('uploads/' . $this->image);
-        $filename = Str::random(10). '.'. $image->extension(); // генерирует имя файла
-        $image->saveAs('uploads', $filename); // относительно папки public
+        if ($this->image != null) {
+            Storage::delete('uploads/' . $this->image);
+        }
+    }
+
+    public function uploadImage($image)
+    {
+        if ($image == null) {
+            return;
+        }
+
+        $this->removeImage();
+        $filename = Str::random(10) . '.' . $image->extension(); // генерирует имя файла
+        $image->storeAs('uploads', $filename); // относительно папки public
         $this->image = $filename;
         $this->save();
     }
 
     public function getImage()
     {
-        if ($this->image == null)
-        {
+        if ($this->image == null) {
             return '/img/no-image.png';
         }
         return '/uploads/' . $this->image;
 
     }
 
-    public function  setCategory($id)
+    public function setCategory($id)
     {
-        if ($id == null) {return;}
-        $category = Category::find($id);
-        $this->category()->save($category);
-//        $this->category_id = $id;
-//        $this->save();
+        if ($id == null) {
+            return;
+        }
+        $this->category_id = $id;
+        $this->save();
     }
 
     public function setTags($ids)
     {
-        if ($ids == null){return;}
+        if ($ids == null) {
+            return;
+        }
 
         $this->tags()->sync($ids); //синхронизация тегов
     }
@@ -113,7 +135,7 @@ class Post extends Model
         $this->save(); // в черновик
     }
 
-    public  function setPublic()
+    public function setPublic()
     {
         $this->status = Post::IS_PUBLIC;
         $this->save(); // публичный статус
@@ -121,8 +143,7 @@ class Post extends Model
 
     public function toggleStatus($value) //переключатель для статей
     {
-        if ($value == null)
-        {
+        if ($value == null) {
             return $this->setDraft();
         }
 
@@ -132,13 +153,13 @@ class Post extends Model
 
     public function setFeatured() // рекомендованные
     {
-        $this->is_featured = 0;
+        $this->is_featured = true;
         $this->save(); //
     }
 
-    public  function setStandart()
+    public function setStandart()
     {
-        $this->status = 1;
+        $this->is_featured = 0;
         $this->save();
     }
 
@@ -148,8 +169,40 @@ class Post extends Model
         {
             return $this->setStandart();
         }
-
         return $this->setFeatured();
+    }
+
+    public function setDateAttribute($value)
+    {
+        $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
+        $this->attributes['date'] = $date;
+    }
+
+    public function getDateAttribute($value)
+    {
+       $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+        return $date;
+    }
+
+    public function getCategoryTitle()
+    {
+//        if ($this->category != null)
+//        {
+//            return $this->category->title;
+//        }
+//        return 'Нет категории';
+
+        return ($this->category != null)
+            ? $this->category->title
+            : 'Нет категории';
+
+    }
+
+    public function getTagsTitles()
+    {
+        return (!$this->tags->isEmpty())
+            ? implode(', ', $this->tags->pluck('title')->all())
+            : 'Нет тегов';
     }
 
 
