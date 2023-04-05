@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EditUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-       return view('admin.users.create');
+        return view('admin.users.create');
     }
 
     /**
@@ -32,10 +33,11 @@ class UsersController extends Controller
     public function store(UserRequest $request)
     {
 
-          $user= User::add($request->all());
-          $user->uploadAvatar($request->file('avatar'));
+        $user = User::add($request->all());
+        $user->generatePassword($request->get('password'));
+        $user->uploadAvatar($request->file('avatar'));
 
-         return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index');
 
     }
 
@@ -52,15 +54,23 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditUserRequest $request, string $id)
     {
-        //
+        $user = User::find($id);
+
+//        dd($request->all());
+        $user->edit($request->all());
+        $user->generatePassword($request->get('password'));
+        $user->uploadAvatar($request->file('avatar'));
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -68,6 +78,8 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+       User::find($id)->remove();
+
+       return redirect()->route('admin.users.index');
     }
 }

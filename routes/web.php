@@ -27,4 +27,5 @@ Route::prefix('/admin')->name('admin.')->group(function (){
     Route::resource('/categories', 'App\Http\Controllers\Admin\CategoriesController');
     Route::resource('/tags', 'App\Http\Controllers\Admin\TagsController');
     Route::resource('/users', 'App\Http\Controllers\Admin\UsersController');
+    Route::resource('/posts', 'App\Http\Controllers\Admin\PostsController');
 });

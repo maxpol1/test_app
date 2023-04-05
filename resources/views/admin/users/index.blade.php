@@ -16,7 +16,6 @@
                 <li class="active">Blank page</li>
             </ol>
         </section>
-
         <!-- Main content -->
         <section class="content">
 
@@ -48,8 +47,7 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <img src="{{$user->getAvatar()}}" alt="" class="img-responsive"
-                                         width="150">
+                                    <img src="{{$user->getImage()}}"  alt="User Image"  class="img-responsive"  width="150">
                                 </td>
                                 <td>
                                     <a href="{{route('admin.users.edit', $user->id)}}" class="fa fa-pencil"></a>
@@ -70,10 +68,8 @@
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
-
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
 @endsection

@@ -8,6 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * добавляет столбец в таблицу
      */
     public function up(): void
     {
@@ -18,6 +19,7 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     * возвращает его в исходное состояние т.е удаляет.
      */
     public function down(): void
     {
