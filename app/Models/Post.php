@@ -23,7 +23,7 @@ class Post extends Model
 
     protected $fillable =
         [
-            'title', 'content', 'date',
+            'title', 'content', 'date', 'description'
 //            'category_id', 'status', 'is_featured'
         ];
 
@@ -205,6 +205,15 @@ class Post extends Model
             : 'Нет тегов';
     }
 
+    public function getCategoryID()
+    {
+        return $this->category != null ? $this->category->id : null;
+    }
+
+    public  function getDate()
+    {
+    return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
+    }
 
 }
 
