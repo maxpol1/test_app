@@ -51,7 +51,7 @@ Route::middleware('guest')->group(function (){
 //Route::get('/admin', [DashboardController::class, 'index'] );
 //Route::resource('/admin/categories', 'App\Http\Controllers\Admin\CategoriesController');
 
-Route::middleware('admin')->prefix('/admin')->name('admin.')->group(function (){
+Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (){
     Route::get('/', [DashboardController::class, 'index'])->middleware('admin');
     Route::resource('/categories', 'App\Http\Controllers\Admin\CategoriesController');
     Route::resource('/tags', 'App\Http\Controllers\Admin\TagsController');
