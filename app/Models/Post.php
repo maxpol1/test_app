@@ -215,5 +215,56 @@ class Post extends Model
     return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
     }
 
+    public function hasPrevious()
+    {
+       return self::query()->where('id', '<', $this->id)->max('id');
+    }
+    public function getPrevious()
+    {
+        $postID = $this->hasPrevious();
+        return self::find($postID);
+    }
+
+    public function hasNext()
+    {
+       return self::query()->where('id', '>', $this->id)->min('id');
+    }
+
+    public function getNext()
+    {
+        $postId =$this->hasNext();
+        return self::find($postId);
+    }
+
+    public function related()
+    {
+        return self::all()->except($this->id);
+    }
+
+    public function hasCategory()
+    {
+        return $this->category != null ? true : false;
+    }
+
+  public static function getPopularPost()
+  {
+
+         return self::orderBy('views', 'desc')
+          ->take(3)
+          ->get();
+  }
+
+  public static function getFeaturedPost() {
+     return self::where('is_featured', 1)
+          ->take(3)
+          ->get();
+  }
+
+public static function getRecentPost()
+{
+  return self::orderBy('date', 'desc')
+        ->take(4)
+        ->get();
+}
 }
 
