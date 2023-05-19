@@ -29,7 +29,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href={{ asset('front/images/favicon.png') }}>
 
-</head
+</head>
 <body>
 
 <nav class="navbar main-menu navbar-default">
