@@ -31,6 +31,7 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
+//        dd($request);
         if (Auth::attempt([
             'email' => $request->get('email'),
             'password' => $request->get('password'),

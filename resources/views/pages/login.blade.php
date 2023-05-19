@@ -16,7 +16,7 @@
                         @include('admin.errors')
                         <br>
                         <form class="form-horizontal contact-form" role="form" method="post" action="/login">
-                            {{ csrf_field() }}
+                            @csrf
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" id="email" name="email"

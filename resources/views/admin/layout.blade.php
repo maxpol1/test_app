@@ -17,6 +17,7 @@
 {{--    <!-- AdminLTE Skins. Choose a skin from the css/skins--}}
 {{--         folder instead of downloading all of them to reduce the load. -->--}}
 {{--    <link rel="stylesheet" href="{{asset('/admin/dist/css/skins/_all-skins.min.css')}}">--}}
+    <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
 
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
 
@@ -460,6 +461,14 @@
 {{--<script>--}}
 {{--    CKEDITOR.replace( 'summary-ckeditor' );--}}
 {{--</script>--}}
+{{--<script>--}}
+{{--    ClassicEditor--}}
+{{--        .create( document.querySelector( '#editor' ) )--}}
+{{--        .catch( error => {--}}
+{{--            console.error( error );--}}
+{{--        } );--}}
+{{--</script>--}}
+
 </body>
 
 <!-- Mirrored from almsaeedstudio.com/themes/AdminLTE/pages/examples/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 18 Dec 2016 15:13:35 GMT -->
