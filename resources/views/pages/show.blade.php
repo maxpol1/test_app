@@ -7,13 +7,15 @@
                 <div class="col-md-8">
                     <article class="post">
                         <div class="post-thumb">
-                            <a href="{{ route('post.show', $post->slug) }}"><img src="{{ $post->getImage() }}" alt=""></a>
+                            <a href="{{ route('post.show', $post->slug) }}"><img src="{{ $post->getImage() }}"
+                                                                                 alt=""></a>
                         </div>
                         <div class="post-content">
                             <header class="entry-header text-center text-uppercase">
                                 @include('partials._category', compact('post'))
 
-                                <h1 class="entry-title"><a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a></h1>
+                                <h1 class="entry-title"><a
+                                        href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a></h1>
 
                             </header>
                             <div class="entry-content">
@@ -21,13 +23,14 @@
                             </div>
                             <div class="decoration">
                                 @foreach($post->tags as $tag)
-                                    <a href="{{ route('tag.show', $tag->slug) }}" class="btn btn-default">{{ $tag->title }}</a>
+                                    <a href="{{ route('tag.show', $tag->slug) }}"
+                                       class="btn btn-default">{{ $tag->title }}</a>
                                 @endforeach
                             </div>
                             <div class="social-share">
 							<span
                                 class="social-share-title pull-left text-capitalize">
-                                By {{ $post->author->name }} On {{ $post->getDate() }}</span>
+                                By Rubel On {{ $post->getDate() }}</span>
                                 <ul class="text-center pull-right">
                                     <li>
                                         <a class="s-facebook" href="#">
@@ -43,8 +46,8 @@
                         </div>
                     </article>
                     <div class="top-comment"><!--top comment-->
-                        <img src="{{ $post->author->getImage() }}" class="pull-left img-circle" alt="">
-                        <h4>{{ $post->author->name }}</h4>
+                        <img src="{{ asset('front/images/comment.jpg') }}" class="pull-left img-circle" alt="">
+                        <h4>Rubel Miah</h4>
 
                         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy hello ro mod tempor
                             invidunt ut labore et dolore magna aliquyam erat.</p>
@@ -95,13 +98,13 @@
                         </div>
                         <div class="items">
                             @foreach($post->related() as $item)
-                            <div class="single-item">
-                                <a href="{{ route('post.show', $item->slug) }}">
-                                    <img src="{{ $item->getImage() }}" alt="">
+                                <div class="single-item">
+                                    <a href="{{ route('post.show', $item->slug) }}">
+                                        <img src="{{ $item->getImage() }}" alt="">
 
-                                    <p>{{ $item->title }}</p>
-                                </a>
-                            </div>
+                                        <p>{{ $item->title }}</p>
+                                    </a>
+                                </div>
                             @endforeach
                         </div>
                     </div><!--related post carousel-->
@@ -131,34 +134,37 @@
                     <!-- end bottom comment-->
 
                     @if(\Illuminate\Support\Facades\Auth::check())
-                    <div class="leave-comment"><!--leave comment-->
-                        <h4>Leave a reply</h4>
-                        <form class="form-horizontal contact-form" role="form" method="post" action="#">
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" id="email" name="email"
-                                           placeholder="Email">
-                                </div>
-                            </div>
+                        <div class="leave-comment"><!--leave comment-->
+                            <h4>Leave a reply</h4>
 
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control" id="subject" name="subject"
-                                           placeholder="Website url">
+
+                            <form class="form-horizontal contact-form" role="form" method="post" action="#">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="name" name="name"
+                                               placeholder="Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control" id="email" name="email"
+                                               placeholder="Email">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" id="subject" name="subject"
+                                               placeholder="Website url">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
 										<textarea class="form-control" rows="6" name="message"
                                                   placeholder="Write Massage"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <a href="#" class="btn send-btn">Post Comment</a>
-                        </form>
-                    </div><!--end leave comment-->
+                                <a href="#" class="btn send-btn">Post Comment</a>
+                            </form>
+                        </div><!--end leave comment-->
                     @endif
                 </div>
                 @include('pages._sidebar')
