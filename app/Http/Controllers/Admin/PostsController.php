@@ -27,9 +27,10 @@ class PostsController extends Controller
     {
         $categories = Category::pluck('title', 'id')->all();
         $tags = Tag::pluck('title', 'id')->all();
+        $post = new Post();
 
         return view('admin.posts.create',
-            compact('tags', 'categories'));
+            compact('tags', 'categories', 'post'));
     }
 
     /**

@@ -165,8 +165,7 @@ class Post extends Model
 
     public function toggleFeatured($value) //переключатель для статей
     {
-        if ($value == null)
-        {
+        if ($value == null) {
             return $this->setStandart();
         }
         return $this->setFeatured();
@@ -180,7 +179,7 @@ class Post extends Model
 
     public function getDateAttribute($value)
     {
-       $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+        $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
         return $date;
     }
 
@@ -210,15 +209,16 @@ class Post extends Model
         return $this->category != null ? $this->category->id : null;
     }
 
-    public  function getDate()
+    public function getDate()
     {
-    return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
+        return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
     }
 
     public function hasPrevious()
     {
-       return self::query()->where('id', '<', $this->id)->max('id');
+        return self::query()->where('id', '<', $this->id)->max('id');
     }
+
     public function getPrevious()
     {
         $postID = $this->hasPrevious();
@@ -227,12 +227,12 @@ class Post extends Model
 
     public function hasNext()
     {
-       return self::query()->where('id', '>', $this->id)->min('id');
+        return self::query()->where('id', '>', $this->id)->min('id');
     }
 
     public function getNext()
     {
-        $postId =$this->hasNext();
+        $postId = $this->hasNext();
         return self::find($postId);
     }
 
@@ -246,25 +246,26 @@ class Post extends Model
         return $this->category != null ? true : false;
     }
 
-  public static function getPopularPost()
-  {
+    public static function getPopularPost()
+    {
 
-         return self::orderBy('views', 'desc')
-          ->take(3)
-          ->get();
-  }
+        return self::orderBy('views', 'desc')
+            ->take(3)
+            ->get();
+    }
 
-  public static function getFeaturedPost() {
-     return self::where('is_featured', 1)
-          ->take(3)
-          ->get();
-  }
+    public static function getFeaturedPost()
+    {
+        return self::where('is_featured', 1)
+            ->take(3)
+            ->get();
+    }
 
-public static function getRecentPost()
-{
-  return self::orderBy('date', 'desc')
-        ->take(4)
-        ->get();
-}
+    public static function getRecentPost()
+    {
+        return self::orderBy('date', 'desc')
+            ->take(4)
+            ->get();
+    }
 }
 

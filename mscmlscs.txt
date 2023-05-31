@@ -34,3 +34,6 @@ rm -R имя каталого ---удаляет католог с содержи
   service docker restart
   работать и
    docker run hello-world
+
+ foreach ($bookData['author'] as $authorData)
+        $author = join(' ',  array_values($authorData)); достает все значения автора и переводит в строку

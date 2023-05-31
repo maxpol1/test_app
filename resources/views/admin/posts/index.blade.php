@@ -19,8 +19,6 @@
 
         <!-- Main content -->
         <section class="content">
-            <form action="{{ route('admin.posts.store') }}" method="get" enctype="multipart/form-data">
-                @csrf
                 <!-- Default box -->
                 <div class="box">
                     <div class="box-header">
@@ -72,7 +70,6 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-            </form>
         </section>
         <!-- /.content -->
     </div>

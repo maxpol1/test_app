@@ -27,7 +27,7 @@
                             <div class="social-share">
 							<span
                                 class="social-share-title pull-left text-capitalize">
-                                By Rubel On {{ $post->getDate() }}</span>
+                                By {{ $post->author->name }} On {{ $post->getDate() }}</span>
                                 <ul class="text-center pull-right">
                                     <li>
                                         <a class="s-facebook" href="#">
@@ -43,8 +43,8 @@
                         </div>
                     </article>
                     <div class="top-comment"><!--top comment-->
-                        <img src="{{ asset('front/images/comment.jpg') }}" class="pull-left img-circle" alt="">
-                        <h4>Rubel Miah</h4>
+                        <img src="{{ $post->author->getImage() }}" class="pull-left img-circle" alt="">
+                        <h4>{{ $post->author->name }}</h4>
 
                         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy hello ro mod tempor
                             invidunt ut labore et dolore magna aliquyam erat.</p>
@@ -130,11 +130,9 @@
                     </div>
                     <!-- end bottom comment-->
 
-
+                    @if(\Illuminate\Support\Facades\Auth::check())
                     <div class="leave-comment"><!--leave comment-->
                         <h4>Leave a reply</h4>
-
-
                         <form class="form-horizontal contact-form" role="form" method="post" action="#">
                             <div class="form-group">
                                 <div class="col-md-6">
@@ -161,6 +159,7 @@
                             <a href="#" class="btn send-btn">Post Comment</a>
                         </form>
                     </div><!--end leave comment-->
+                    @endif
                 </div>
                 @include('pages._sidebar')
             </div>
